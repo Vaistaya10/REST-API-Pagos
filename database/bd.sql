@@ -1,3 +1,4 @@
+drop database if exists prestamos;
 create database prestamos;
 use prestamos;
 
@@ -9,7 +10,7 @@ dni				char(8) 	not null,
 telefono 		char(9) 	not null,
 direccion 		varchar(90) not null,
 creado 			datetime 	not null default now(),
-modificado 		datetime    not null,
+modificado 		datetime    null,
 constraint uk_dni_ben unique (dni)
 )engine = innodb;
 
@@ -23,7 +24,7 @@ diapago 		tinyint 		not null,
 numcuotas 		tinyint 		not null comment 'expresado en meses',
 estado 			enum('ACT','FIN') not null default 'ACT' comment 'ACT = Activo, FIN = Finalizo',
 creado 			datetime 	not null default now(),
-modificado 		datetime    not null,
+modificado 		datetime    null,
 constraint fk_idbeneficiario_con foreign key (idbeneficiario) references beneficiarios (idbeneficiario)
 )engine = innodb;
 
@@ -42,12 +43,16 @@ constraint uk_numcuota_pag unique (idcontrato,numcuota)
 insert into beneficiarios (apellidos, nombres, dni, telefono) values 
 ('Tasayco Yataco', 'Valentino Ismael', '76180741', '956633983');
 
+
+
 insert into beneficiarios(apellidos,nombres,dni,telefono) values
-('Tasayco Yataco','Yohies Lisbeth','80085333','912468430');
+('Gonzales Martinez','Maria ','80085333','912468430');
 
 insert into contratos (idbeneficiario,monto, interes,fechainicio,diapago,numcuotas) values
 (1,3000,5,'2025-03-10',15,12);
 
+
+-- select * from beneficiarios
 insert into contratos (idbeneficiario,monto,interes,fechainicio,diapago,numcuotas) values
 (2,3000,5,'2025-03-10',15,12);
 -- cronograma de 12 pagos
